@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lautaro Cenizo - Backend Java Developer | Spring Boot | Python | High-Volume Systems">
+    <title>Lautaro Cenizo | Backend Java Developer</title>
+    <style>
+        /* ========================================
+           RESET Y VARIABLES GLOBALES
+           Variables CSS centralizadas para
+           facilitar cambios de tema.
+        ======================================== */
+        :root {
+            --bg: #ffffff;
+            --bg-alt: #f5f5f5;
+            --text: #1a1a1a;
+            --text-secondary: #555555;
+            --accent: #000000;
+            --border: #e0e0e0;
+            --max-width: 900px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ========================================
+           NAVEGACIÓN FIJA SUPERIOR
+        ======================================== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        nav .nav-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: -0.5px;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        nav .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--accent);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        /* ========================================
+           SECCIONES GENERALES
+        ======================================== */
+        section {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            font-weight: 600;
+        }
+
+        /* ========================================
+           HERO
+        ======================================== */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 6rem;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            width: 100%;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Título profesional debajo del nombre */
+        .hero-text .role {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-text .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hero-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.7rem 1.5rem;
+            border: 1.5px solid var(--accent);
+            color: var(--accent);
+            transition: all 0.2s;
+        }
+
+        .hero-links a.primary {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        .hero-links a:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        .hero-links a.primary:hover {
+            opacity: 0.85;
+        }
+
+        .hero-photo {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 3px solid var(--border);
+        }
+
+        .hero-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            background: var(--bg-alt);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--text-secondary);
+        }
+
+        /* ========================================
+           ABOUT
+        ======================================== */
+        #about {
+            background: var(--bg-alt);
+            max-width: 100%;
+            padding: 5rem 2rem;
+        }
+
+        #about .about-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .about-text {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+        }
+
+        /* ========================================
+           EXPERIENCIA - Timeline vertical
+        ======================================== */
+        .experience-item {
+            padding-left: 2rem;
+            border-left: 2px solid var(--border);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .experience-item h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .experience-item .company {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.2rem;
+        }
+
+        .experience-item .period {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.8rem;
+        }
+
+        .experience-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* ========================================
+           PROYECTOS - Grid de cards
+        ======================================== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            border: 1px solid var(--border);
+            padding: 2rem;
+            transition: border-color 0.2s;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+        }
+
+        .project-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .project-tags span {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.6rem;
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            font-weight: 500;
+        }
+
+        .project-card .project-link {
+            display: inline-block;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .project-card .project-link:hover {
+            text-decoration: underline;
+        }
+
+        /* ========================================
+           SKILLS
+        ======================================== */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .skill-category h3 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            padding: 0.3rem 0;
+        }
+
+        /* ========================================
+           EDUCACIÓN Y CERTIFICACIONES
+        ======================================== */
+        #education {
+            background: var(--bg-alt);
+            max-width: 100%;
+            padding: 5rem 2rem;
+        }
+
+        #education .education-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .education-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .education-block h3 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .education-entry {
+            margin-bottom: 1.2rem;
+        }
+
+        .education-entry h4 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .education-entry .institution {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .education-entry .year {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+        }
+
+        /* Certificaciones en grid compacto */
+        .certs-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .cert-item {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .cert-item strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .cert-item .cert-source {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* ========================================
+           CONTACTO
+        ======================================== */
+        #contact {
+            max-width: 100%;
+            padding: 5rem 2rem;
+        }
+
+        #contact .contact-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .contact-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 0.8rem 1.5rem;
+            border: 1.5px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .contact-links a:hover {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        /* ========================================
+           FOOTER
+        ======================================== */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+        }
+
+        /* ========================================
+           RESPONSIVE
+        ======================================== */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(255, 255, 255, 0.98);
+                padding: 1rem 2rem;
+                gap: 1rem;
+                border-bottom: 1px solid var(--border);
+            }
+
+            nav .nav-links.active {
+                display: flex;
+            }
+
+            .hero-content {
+                flex-direction: column-reverse;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-text .subtitle {
+                margin: 0 auto 2rem;
+            }
+
+            .hero-links {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .hero-photo {
+                width: 160px;
+                height: 160px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .education-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========================
+         NAVEGACIÓN
+         ======================== -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#hero" class="logo">LC</a>
+            <button class="menu-toggle" onclick="toggleMenu()" aria-label="Abrir menú">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about" onclick="closeMenu()">Sobre mí</a></li>
+                <li><a href="#experience" onclick="closeMenu()">Experiencia</a></li>
+                <li><a href="#projects" onclick="closeMenu()">Proyectos</a></li>
+                <li><a href="#skills" onclick="closeMenu()">Skills</a></li>
+                <li><a href="#education" onclick="closeMenu()">Educación</a></li>
+                <li><a href="#contact" onclick="closeMenu()">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ========================
+         HERO
+         ======================== -->
+    <section id="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Lautaro Cenizo</h1>
+                <p class="role">Backend Java Developer | Spring Boot | Python | Salesforce | High-Volume Systems</p>
+                <p class="subtitle">
+                    Desarrollo aplicaciones críticas que procesan +10,000 transacciones diarias.
+                    Especialista en optimización de rendimiento y soluciones enterprise escalables.
+                </p>
+                <div class="hero-links">
+                    <!-- TODO: Verificá que estos links sean correctos -->
+                    <a href="https://linkedin.com/in/lautaro-cenizo" class="primary" target="_blank">LinkedIn</a>
+                    <a href="https://github.com/1auti" target="_blank">GitHub</a>
+                    <a href="mailto:lautacenizo@gmail.com">Email</a>
+                </div>
+            </div>
+            <div class="hero-photo">
+                <!-- TODO: Reemplazá con tu foto: <img src="foto.jpg" alt="Lautaro Cenizo"> -->
+                <img src="/assets/foto.jpg" alt="Lautaro Cenizo">
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================
+         SOBRE MÍ
+         Basado en tu LinkedIn + enfoque en rendimiento
+         ======================== -->
+    <section id="about">
+        <div class="about-inner">
+            <p class="section-title">Sobre mí</p>
+            <div class="about-text">
+                <p>
+                    Desarrollo aplicaciones críticas que procesan +10,000 transacciones diarias
+                    en sistemas judiciales y de gestión de infracciones en Tránsito Seguro S.A.
+                    Mi enfoque: soluciones escalables que resuelven problemas reales.
+                </p>
+                <p>
+                    Me especializo en diagnóstico y mejora de rendimiento de aplicativos.
+                    Optimicé procesamiento de archivos ZIP de 15+ minutos a menos de 2 minutos
+                    mediante integración C/JNI, y resolví inconsistencias críticas en sistemas
+                    contables legacy garantizando la integridad de datos financieros.
+                </p>
+                <p>
+                    Diseñé e implementé sistemas de gestión de dispositivos IoT (MileSight) con
+                    validación automatizada, y participé en la migración e implementación de
+                    funciones críticas para servicios en la nube (GCP).
+                </p>
+                <p>
+                    Cursando Licenciatura en Sistemas en UNLA con foco en arquitectura de software.
+                    Me motiva el desafío de optimizar sistemas complejos y escribir código que escale.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================
+         EXPERIENCIA
+         ======================== -->
+    <section id="experience">
+        <p class="section-title">Experiencia</p>
+
+        <!-- Tránsito Seguro -->
+        <div class="experience-item">
+            <h3>Backend Engineer</h3>
+            <p class="company">Tránsito Seguro S.A · Jornada completa</p>
+            <p class="period">Febrero 2025 — Presente</p>
+            <p>
+                Arquitectura de Reportes: diseño e implementación de dashboard centralizado que
+                consolida 12+ fuentes de datos en una única interfaz, reduciendo un 80% el tiempo
+                de búsqueda de información (de 30 a 6 minutos por reporte).
+            </p>
+            <p style="margin-top:0.5rem">
+                Pipeline ETL en Python: desarrollo de pipeline FastAPI procesando 50,000+ registros
+                diarios de infracciones. Automatización de 30+ horas mensuales de procesamiento manual
+                con confiabilidad del 99.8%.
+            </p>
+            <p style="margin-top:0.5rem">
+                Visibilidad Operacional: creación de dashboards en tiempo real exponiendo 20+ KPIs
+                (tasa de procesamiento, errores, volumen de transacciones) para decisiones basadas en datos.
+            </p>
+            <p style="margin-top:0.5rem">
+                Resolución de Inconsistencias Contables: sistema de trazabilidad que resolvió 1,200+
+                discrepancias contables mensuales, eliminando 40+ horas de reconciliación manual.
+            </p>
+            <p style="margin-top:0.5rem">
+                Optimización de rendimiento mediante integración C/JNI y técnicas avanzadas de
+                prefetching que redujeron significativamente el impacto de procesamiento del hardware.
+            </p>
+            <p style="margin-top:0.5rem">
+                Migración y arquitectura en Google Cloud Platform: participación en la migración
+                de productos internos de la empresa a GCP.
+            </p>
+        </div>
+
+        <!-- Freelance -->
+        <div class="experience-item">
+            <h3>Freelance Developer</h3>
+            <p class="company">Independiente</p>
+            <p class="period">Agosto 2024 — Presente</p>
+            <p><strong>Desafíos destacados:</strong></p>
+            <p style="margin-top:0.5rem">
+                Aula Virtual Full-Stack: plataforma educativa con Spring Boot + Angular.
+                Gestión de cursos, calificaciones, comunicación en tiempo real y sección de exámenes.
+            </p>
+            <p style="margin-top:0.5rem">
+                Web Scraping - Precios Supermercados: plataforma que centraliza precios de 20+
+                supermercados en Argentina. Tech: Python, FastAPI, Selenium, Angular, Spring Boot.
+                Base de datos con 100,000+ productos e histórico de precios.
+            </p>
+            <p style="margin-top:0.5rem">
+                Microservicios + Kubernetes: arquitectura escalable con 4+ servicios independientes.
+                Spring Boot, RabbitMQ/Kafka, Keycloak, Docker, Kubernetes.
+                Escala: 10,000+ requests/día con auto-scaling.
+            </p>
+        </div>
+    </section>
+
+    <!-- ========================
+         PROYECTOS DESTACADOS
+         Proyectos personales / freelance
+         ======================== -->
+    <section id="projects">
+        <p class="section-title">Proyectos destacados</p>
+        <div class="projects-grid">
+
+            <!-- E-Commerce Microservicios -->
+            <div class="project-card">
+                <h3>E-Commerce Microservicios</h3>
+                <p>
+                    Sistema escalable de e-commerce con arquitectura de microservicios.
+                    Gestión de pagos y pedidos con autenticación OAuth2 y migraciones
+                    automatizadas con Flyway.
+                </p>
+                <div class="project-tags">
+                    <span>Spring Boot</span>
+                    <span>Kafka</span>
+                    <span>Docker</span>
+                    <span>Keycloak</span>
+                    <span>PostgreSQL</span>
+                    <span>Spring Cloud</span>
+                </div>
+                <!-- TODO: Agregá link si es público -->
+                <a href="https://github.com/1auti" class="project-link">Ver en GitHub →</a>
+            </div>
+
+            <!-- Supermercado Scraping -->
+            <div class="project-card">
+                <h3>Scraping Precios Supermercados</h3>
+                <p>
+                    Sistema de análisis de precios que centraliza datos de 20+ supermercados
+                    en Argentina. Automatización de extracción con autoguardado y soluciones
+                    para carga dinámica. 100,000+ productos con histórico.
+                </p>
+                <div class="project-tags">
+                    <span>Java 17</span>
+                    <span>Spring Boot</span>
+                    <span>Selenium</span>
+                    <span>Python</span>
+                    <span>FastAPI</span>
+                    <span>Angular</span>
+                </div>
+                <a href="https://github.com/1auti" class="project-link">Ver en GitHub →</a>
+            </div>
+
+            <!-- Plataforma Clínica Odontológica -->
+            <div class="project-card">
+                <h3>Plataforma Clínica Odontológica</h3>
+                <p>
+                    Gestión de pacientes y servicios con autenticación avanzada JWT,
+                    interfaces responsive y API RESTful completa. Sistema de turnos
+                    y seguimiento de tratamientos.
+                </p>
+                <div class="project-tags">
+                    <span>Spring Boot</span>
+                    <span>Spring Security</span>
+                    <span>JWT</span>
+                    <span>Angular</span>
+                    <span>REST API</span>
+                </div>
+                <a href="https://github.com/1auti" class="project-link">Ver en GitHub →</a>
+            </div>
+
+            <!-- U-Play API -->
+            <div class="project-card">
+                <h3>U-Play API — Crypto Exchange</h3>
+                <p>
+                    Plataforma de gestión de transacciones con criptomonedas.
+                    Sistema de intercambio en tiempo real con autenticación JWT,
+                    optimizada para grandes volúmenes de datos.
+                </p>
+                <div class="project-tags">
+                    <span>Java</span>
+                    <span>Spring Boot</span>
+                    <span>JWT</span>
+                    <span>REST API</span>
+                </div>
+                <a href="https://github.com/1auti" class="project-link">Ver en GitHub →</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================
+         SKILLS / TECH STACK
+         ======================== -->
+    <section id="skills">
+        <p class="section-title">Tech Stack</p>
+        <div class="skills-grid">
+
+            <div class="skill-category">
+                <h3>Backend</h3>
+                <ul>
+                    <li>Java (8 / 17)</li>
+                    <li>Spring Boot / MVC / Security</li>
+                    <li>JPA / Hibernate</li>
+                    <li>Microservicios</li>
+                    <li>RESTful APIs / JWT</li>
+                    <li>Python / FastAPI</li>
+                    <li>Kafka / RabbitMQ</li>
+                    <li>Salesforce</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3>Bases de datos</h3>
+                <ul>
+                    <li>PostgreSQL</li>
+                    <li>SQL avanzado</li>
+                    <li>Flyway (migraciones)</li>
+                    <li>Modelado relacional</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3>Infra & DevOps</h3>
+                <ul>
+                    <li>Docker</li>
+                    <li>Kubernetes</li>
+                    <li>Google Cloud Platform</li>
+                    <li>Linux</li>
+                    <li>Git</li>
+                    <li>Tomcat</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3>Frontend</h3>
+                <ul>
+                    <li>Angular</li>
+                    <li>ZK Framework</li>
+                    <li>HTML / CSS</li>
+                    <li>JavaScript / TypeScript</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================
+         EDUCACIÓN Y CERTIFICACIONES
+         ======================== -->
+    <section id="education">
+        <div class="education-inner">
+            <p class="section-title">Educación & Certificaciones</p>
+            <div class="education-grid">
+
+                <!-- Educación formal -->
+                <div class="education-block">
+                    <h3>Educación</h3>
+
+                    <div class="education-entry">
+                        <h4>Licenciatura en Sistemas</h4>
+                        <p class="institution">UNLA — Remedios de Escalada</p>
+                        <p class="year">2021 — Actualidad</p>
+                    </div>
+
+                    <div class="education-entry">
+                        <h4>Estudios Secundarios</h4>
+                        <p class="institution">Instituto Santa Inés — Turdera</p>
+                        <p class="year">2015 — 2020</p>
+                    </div>
+                </div>
+
+                <!-- Certificaciones -->
+                <div class="education-block">
+                    <h3>Certificaciones</h3>
+                    <div class="certs-list">
+                        <div class="cert-item">
+                            <strong>Developer Salesforce</strong> (2024)
+                            <p class="cert-source">Talent Tech</p>
+                        </div>
+                        <div class="cert-item">
+                            <strong>Ethereum Developer</strong> (2024)
+                            <p class="cert-source">Talent Tech</p>
+                        </div>
+                        <div class="cert-item">
+                            <strong>Java + Frontend</strong> (2024)
+                            <p class="cert-source">Codo a Codo</p>
+                        </div>
+                        <div class="cert-item">
+                            <strong>Se Programar</strong> (2023)
+                            <p class="cert-source">Argentina Programa</p>
+                        </div>
+                        <div class="cert-item">
+                            <strong>Yo Programo</strong> (2022)
+                            <p class="cert-source">Argentina Programa</p>
+                        </div>
+                        <div class="cert-item">
+                            <strong>Análisis de datos en Python</strong> (2021)
+                            <p class="cert-source">UNLA</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================
+         CONTACTO
+         ======================== -->
+    <section id="contact">
+        <div class="contact-inner">
+            <p class="section-title">Contacto</p>
+            <div class="contact-links">
+                <a href="mailto:lautacenizo@gmail.com">✉ lautacenizo@gmail.com</a>
+                <a href="tel:+5491144364879">📱 +54 9 1144364879</a>
+                <a href="https://linkedin.com/in/lautaro-cenizo" target="_blank">LinkedIn</a>
+                <a href="https://github.com/1auti" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================
+         FOOTER
+         ======================== -->
+    <footer>
+        <p>© 2026 Lautaro Cenizo — Buenos Aires, Argentina</p>
+    </footer>
+
+    <!-- ========================
+         JAVASCRIPT - Solo menú mobile
+    ======================== -->
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+        function closeMenu() {
+            document.getElementById('navLinks').classList.remove('active');
+        }
+    </script>
+
+</body>
+</html>
